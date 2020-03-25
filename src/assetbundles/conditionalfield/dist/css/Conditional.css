@@ -9,3 +9,6 @@
  * @package   ConditionalFields
  * @since     0.0.1
  */
+.conditionalValue select option[disabled] {
+  display: none;
+}

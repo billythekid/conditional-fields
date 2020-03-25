@@ -1,7 +1,6 @@
 <?php
 /**
  * Conditional Fields plugin for Craft CMS 3.x
- *
  * if (condition) { show(field) }
  *
  * @link      https://billyfagan.co.uk
@@ -27,111 +26,118 @@ use craft\helpers\Json;
  */
 class Conditional extends Field
 {
-    // Public Properties
-    // =========================================================================
+  // Public Properties
+  // =========================================================================
 
-    /**
-     * @var string
-     */
-    public $someAttribute = 'Some Default';
+  /**
+   * @var string
+   */
+  public $conditionalOnField = '';
+  public $conditionalValue = '';
+  public $exactlyValue = '';
+  public $conditionalShow = true;
+  public $conditionalShowOrHideField = '';
 
-    // Static Methods
-    // =========================================================================
+  // Static Methods
+  // =========================================================================
 
-    /**
-     * @inheritdoc
-     */
-    public static function displayName(): string
-    {
-        return Craft::t('conditional-fields', 'Conditional');
-    }
+  /**
+   * @inheritdoc
+   */
+  public static function displayName(): string
+  {
+    return Craft::t('conditional-fields', 'Conditional');
+  }
 
-    // Public Methods
-    // =========================================================================
+  // Public Methods
+  // =========================================================================
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        $rules = parent::rules();
-        $rules = array_merge($rules, [
-            ['someAttribute', 'string'],
-            ['someAttribute', 'default', 'value' => 'Some Default'],
-        ]);
-        return $rules;
-    }
+  /**
+   * @inheritdoc
+   */
+  public function rules()
+  {
+    $rules = parent::rules();
+    $rules = array_merge($rules, [
+        [['conditionalOnField','conditionalShowOrHideField'], 'number'],
+        [['conditionalValue','exactlyValue'], 'string'],
+        ['conditionalShow', 'boolean'],
+        ['conditionalShow', 'default', 'value' => true],
+    ]);
 
-    /**
-     * @inheritdoc
-     */
-    public function getContentColumnType(): string
-    {
-        return Schema::TYPE_STRING;
-    }
+    return $rules;
+  }
 
-    /**
-     * @inheritdoc
-     */
-    public function normalizeValue($value, ElementInterface $element = null)
-    {
-        return $value;
-    }
+  /**
+   * @inheritdoc
+   */
+  public function getContentColumnType(): string
+  {
+    return Schema::TYPE_STRING;
+  }
 
-    /**
-     * @inheritdoc
-     */
-    public function serializeValue($value, ElementInterface $element = null)
-    {
-        return parent::serializeValue($value, $element);
-    }
+  /**
+   * @inheritdoc
+   */
+  public function normalizeValue($value, ElementInterface $element = null)
+  {
+    return $value;
+  }
 
-    /**
-     * @inheritdoc
-     */
-    public function getSettingsHtml()
-    {
-        // Render the settings template
-        return Craft::$app->getView()->renderTemplate(
-            'conditional-fields/_components/fields/Conditional_settings',
-            [
-                'field' => $this,
-            ]
-        );
-    }
+  /**
+   * @inheritdoc
+   */
+  public function serializeValue($value, ElementInterface $element = null)
+  {
+    return parent::serializeValue($value, $element);
+  }
 
-    /**
-     * @inheritdoc
-     */
-    public function getInputHtml($value, ElementInterface $element = null): string
-    {
-        // Register our asset bundle
-        Craft::$app->getView()->registerAssetBundle(ConditionalFieldAsset::class);
+  /**
+   * @inheritdoc
+   */
+  public function getSettingsHtml()
+  {
+    // Render the settings template
+    return Craft::$app->getView()->renderTemplate(
+        'conditional-fields/_components/fields/Conditional_settings',
+        [
+            'field' => $this,
+        ]
+    );
+  }
 
-        // Get our id and namespace
-        $id = Craft::$app->getView()->formatInputId($this->handle);
-        $namespacedId = Craft::$app->getView()->namespaceInputId($id);
+  /**
+   * @inheritdoc
+   */
+  public function getInputHtml($value, ElementInterface $element = null): string
+  {
+    // Register our asset bundle
+    Craft::$app->getView()->registerAssetBundle(ConditionalFieldAsset::class);
 
-        // Variables to pass down to our field JavaScript to let it namespace properly
-        $jsonVars = [
-            'id' => $id,
-            'name' => $this->handle,
-            'namespace' => $namespacedId,
-            'prefix' => Craft::$app->getView()->namespaceInputId(''),
-            ];
-        $jsonVars = Json::encode($jsonVars);
-        Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').ConditionalFieldsConditional(" . $jsonVars . ");");
+    // Get our id and namespace
+    $id           = Craft::$app->getView()->formatInputId($this->handle);
+    $namespacedId = Craft::$app->getView()->namespaceInputId($id);
 
-        // Render the input template
-        return Craft::$app->getView()->renderTemplate(
-            'conditional-fields/_components/fields/Conditional_input',
-            [
-                'name' => $this->handle,
-                'value' => $value,
-                'field' => $this,
-                'id' => $id,
-                'namespacedId' => $namespacedId,
-            ]
-        );
-    }
+    // Variables to pass down to our field JavaScript to let it namespace properly
+    $jsonVars = [
+        'id'        => $id,
+        'name'      => $this->handle,
+        'namespace' => $namespacedId,
+        'prefix'    => Craft::$app->getView()->namespaceInputId(''),
+    ];
+    $jsonVars = Json::encode($jsonVars);
+    Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').ConditionalFieldsConditional(" . $jsonVars . ");");
+
+    // Render the input template
+    return Craft::$app->getView()->renderTemplate(
+        'conditional-fields/_components/fields/Conditional_input',
+        [
+            'name'         => $this->handle,
+            'value'        => $value,
+            'field'        => $this,
+            'id'           => $id,
+            'namespacedId' => $namespacedId,
+        ]
+    );
+  }
 }
