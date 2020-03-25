@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Conditional Fields plugin for Craft CMS
+ *
+ * Conditional Field Settings
+ *
+ * @author    Billy Fagan
+ * @copyright Copyright (c) 2020 Billy Fagan
+ * @link      https://billyfagan.co.uk
+ * @package   ConditionalFields
+ * @since     0.0.1
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("billythekid\\conditionalfields\\assetbundles\\conditionalfields\\ConditionalFieldsAsset") %}
+
+{{ forms.textField({
+    label: 'Some Attribute',
+    instructions: 'Enter some attribute here.',
+    id: 'someAttribute',
+    name: 'someAttribute',
+    value: field['someAttribute']})
+}}

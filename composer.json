@@ -1,0 +1,40 @@
+{
+    "name": "billythekid/conditional-fields",
+    "description": "if (condition) { show(field) }",
+    "type": "craft-plugin",
+    "version": "0.0.1",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "conditional fields"
+    ],
+    "support": {
+        "docs": "https://github.com/billythekid/conditional-fields/blob/master/README.md",
+        "issues": "https://github.com/billythekid/conditional-fields/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Billy Fagan",
+            "homepage": "https://billyfagan.co.uk"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "billythekid\\conditionalfields\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Conditional Fields",
+        "handle": "conditional-fields",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/billythekid/conditional-fields/master/CHANGELOG.md",
+        "class": "billythekid\\conditionalfields\\ConditionalFields"
+    }
+}
