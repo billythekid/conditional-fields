@@ -44,7 +44,7 @@ This plugin adds a new available field type called "Conditional".
 - Choose whether you want to show or hide the fields based on this value
 - Choose the field(s) that should be shown or hidden when matched/unmatched
 
-<img alt="Creating a conditional field" src="resources/img/create-conditional-field.png" style="max-width: 400px">
+![Creating a conditional field](resources/img/create-conditional-field.png =400px)
 
 **NOTE:** Chances are that this won't work inside a matrix block or other complicated stuff. Keep it simple.
 
