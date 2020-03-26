@@ -46,6 +46,8 @@ This plugin adds a new available field type called "Conditional".
 
 <img alt="Creating a conditional field" src="resources/img/create-conditional-field.png" width="400">
 
+To check for an entry in an entry field, use 'contains' and put the entry ID as the value.
+
 **NOTE:** Chances are that this won't work inside a matrix block or other complicated stuff. Keep it simple.
 
 Once your conditional field is created you can drag it in to any field layouts you want it to work in.

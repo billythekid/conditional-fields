@@ -26,11 +26,13 @@
     this.freeTextValue = this.options.freeTextValue;
     this.showOrHide = this.options.showOrHide;
     this.fieldsToToggle = this.options.fieldsToToggle;
+    this.fieldToWatchInitialContent = this.fieldToWatch.html();
 
     this._defaults = defaults;
     this._name = pluginName;
 
     this.init();
+
   }
 
   Plugin.prototype = {
@@ -42,21 +44,32 @@
         /* -- _this.options gives us access to the $jsonVars that our FieldType passed down to us */
         var options = _this.options;
 
-        console.log(options);
-
         _this.showOrHideTheField();
 
         _this.fieldToWatch.on('change', function (changeEvent) {
+          _this.fieldToWatchInitialContent = _this.fieldToWatch.html();
           _this.showOrHideTheField();
         });
+
+        // some crafty things change the DOM but don't fire change events, so poll for any changes in this field's div
+        window.setInterval(function(_this){
+          if(_this.fieldToWatchInitialContent !== _this.fieldToWatch.html())
+          {
+            _this.fieldToWatch.change();
+          }
+        }, 500, _this);
 
       });
     },
     showOrHideTheField: function () {
       var _this = this;
       $(function () {
-        // TODO - make this valuesWeHave and check arrays
         var valueWeHave = _this.fieldToWatch.find('[value]').first().val();
+        var valuesWeHave = _this.fieldToWatch.find('[value]').filter(function () {
+          return $(this).val().length > 0;
+        }).map(function () {
+          return $(this).val();
+        }).toArray();
 
         switch (_this.valueToWatch) {
           case "conditional-empty" :
@@ -96,9 +109,8 @@
             }
             break;
           case "conditional-contains":
-            if (valueWeHave.length && _this.freeTextValue.indexOf(valueWeHave) > -1) {
+            if (valuesWeHave.indexOf(_this.freeTextValue) > -1 || valueWeHave.indexOf(_this.freeTextValue) > -1) {
               console.log('contains match');
-              console.log(_this.freeTextValue + " contains " + valueWeHave);
               _this.matchIt(true);
             } else {
               console.log('contains un-match');
@@ -106,7 +118,7 @@
             }
             break;
           case "conditional-not-contains":
-            if (valueWeHave.length && _this.freeTextValue.indexOf(valueWeHave) === -1) {
+            if (valuesWeHave.indexOf(_this.freeTextValue) === -1 || valueWeHave.indexOf(_this.freeTextValue) === -1) {
               console.log('not-contains match');
               _this.matchIt(true);
             } else {

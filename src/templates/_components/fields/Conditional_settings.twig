@@ -24,12 +24,10 @@
   {'label': 'Any Value',                'value': 'conditional-not-empty'},
   {'label': 'True / On / Checked',      'value': 'conditional-true'},
   {'label': 'False / Off / Unchecked',  'value': 'conditional-false'},
+  {'label': 'Value Contains:',          'value': 'conditional-contains'},
+  {'label': 'Value Does Not Contain:',  'value': 'conditional-not-contains'},
   {'label': 'Exactly this:',            'value': 'conditional-exactly'},
 ] %}
-
-{# TODO implement contains conditions (support array fields) #}
-{#  {'label': 'Value Contains:',          'value': 'conditional-contains'},#}
-{#  {'label': 'Value Does Not Contain:',  'value': 'conditional-not-contains'},#}
 
 {% set fieldCount = 0 %}
 {% for field in fields %}
