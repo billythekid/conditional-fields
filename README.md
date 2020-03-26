@@ -44,17 +44,17 @@ This plugin adds a new available field type called "Conditional".
 - Choose whether you want to show or hide the fields based on this value
 - Choose the field(s) that should be shown or hidden when matched/unmatched
 
-![Creating a conditional field](resources/img/create-conditional-field.png =400px)
+<img alt="Creating a conditional field" src="resources/img/create-conditional-field.png" width="400">
 
 **NOTE:** Chances are that this won't work inside a matrix block or other complicated stuff. Keep it simple.
 
 Once your conditional field is created you can drag it in to any field layouts you want it to work in.
 
-<img alt="adding a conditional field to a field layout" src="resources/img/add-to-field-layout.png" style="max-width: 400px">
+<img alt="adding a conditional field to a field layout" src="resources/img/add-to-field-layout.png" width="400">
 
 The field itself is invisible to your layout. There are no settings or values to be saved in the layout view, we're just adding functionality so we hide it.
 
-<img alt="Layout view showing a matching condition" src="resources/img/layout-view-with-field-matching.png" style="max-width: 400px">
+<img alt="Layout view showing a matching condition" src="resources/img/layout-view-with-field-matching.png" width="400">
 
-<img alt="Layout view showing a non-matching condition" src="resources/img/layout-view-with-field-unmatching.png" style="max-width: 400px">
+<img alt="Layout view showing a non-matching condition" src="resources/img/layout-view-with-field-unmatching.png" width="400">
 
