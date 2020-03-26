@@ -58,3 +58,18 @@ The field itself is invisible to your layout. There are no settings or values to
 
 <img alt="Layout view showing a non-matching condition" src="resources/img/layout-view-with-field-unmatching.png" width="400">
 
+### Dos and Donts
+
+#### Do
+- Keep it simple where possible. Light switch fields make great 'togglers'.
+- Add element IDs to 'contains' matches to match if an element field has that element in it.
+- Remember that this is a _**visual**_ show/hide. No values are changed in hidden fields, they're just shown/hidden from view. (So if it has a value before it's hidden, that value can and will be used against you in your templates!)
+- Add more than one conditional field for different conditions. Just remember that you probably don't want them to work at showing and hiding the same fields.
+- Report issues, or even better fork it and raise pull requests for features and fixes.
+
+#### Dont
+- Expect too much from this! It's not the most elegant solution to a problem but it kinda works ok-ish for at least some of the time.
+- Put multiple IDs in the 'contains' box, that won't work, at least for now.
+- Set anything that could be hidden as a required field if it doesn't have a value in it. Your entr won't validate and you won't be able to see why!
+- Set any "Conditional" fields (the one with the rules in it) to be required in your field layouts, these don't have any values to validate.
+- Set different conditional fields to operate (show/hide) the same fields in the same layouts. Who knows what will happen‽
