@@ -23,6 +23,7 @@
 
     this.fieldToWatch = $('#' + this.options.prefix + this.options.fieldToWatch + '-field').first();
     this.valueToWatch = this.options.valueToWatch;
+    this.freeTextValue = this.options.freeTextValue;
     this.showOrHide = this.options.showOrHide;
     this.fieldsToToggle = this.options.fieldsToToggle;
 
@@ -41,6 +42,8 @@
         /* -- _this.options gives us access to the $jsonVars that our FieldType passed down to us */
         var options = _this.options;
 
+        console.log(options);
+
         _this.showOrHideTheField();
 
         _this.fieldToWatch.on('change', function (changeEvent) {
@@ -52,6 +55,7 @@
     showOrHideTheField: function () {
       var _this = this;
       $(function () {
+        // TODO - make this valuesWeHave and check arrays
         var valueWeHave = _this.fieldToWatch.find('[value]').first().val();
 
         switch (_this.valueToWatch) {
@@ -91,9 +95,28 @@
               _this.matchIt(false);
             }
             break;
-          default :
+          case "conditional-contains":
+            if (valueWeHave.length && _this.freeTextValue.indexOf(valueWeHave) > -1) {
+              console.log('contains match');
+              console.log(_this.freeTextValue + " contains " + valueWeHave);
+              _this.matchIt(true);
+            } else {
+              console.log('contains un-match');
+              _this.matchIt(false);
+            }
+            break;
+          case "conditional-not-contains":
+            if (valueWeHave.length && _this.freeTextValue.indexOf(valueWeHave) === -1) {
+              console.log('not-contains match');
+              _this.matchIt(true);
+            } else {
+              console.log('not-contains un-match');
+              _this.matchIt(false);
+            }
+            break;
+          case "conditional-exactly" :
             // This is an exactly match
-            if (valueWeHave === _this.valueToWatch) {
+            if (valueWeHave === _this.freeTextValue) {
               console.log('exactly match');
               _this.matchIt(true);
             } else {
@@ -108,14 +131,18 @@
       _this = this;
       $(function () {
 
-        var fieldsToToggle = _this.fieldsToToggle.map(function(thisFieldToToggle){
+        var fieldsToToggle = _this.fieldsToToggle.map(function (thisFieldToToggle) {
           return $('#' + _this.options.prefix + thisFieldToToggle + '-field').first();
         });
 
         if ((_this.showOrHide === 'show' && matches) || (_this.showOrHide === 'hide' && !matches)) {
-          $(fieldsToToggle).each(function(){$(this).show()});
+          $(fieldsToToggle).each(function () {
+            $(this).show()
+          });
         } else {
-          $(fieldsToToggle).each(function(){$(this).hide()});
+          $(fieldsToToggle).each(function () {
+            $(this).hide()
+          });
         }
       });
     }

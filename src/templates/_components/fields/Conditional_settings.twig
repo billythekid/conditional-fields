@@ -26,6 +26,11 @@
   {'label': 'False / Off / Unchecked',  'value': 'conditional-false'},
   {'label': 'Exactly this:',            'value': 'conditional-exactly'},
 ] %}
+
+{# TODO implement contains conditions (support array fields) #}
+{#  {'label': 'Value Contains:',          'value': 'conditional-contains'},#}
+{#  {'label': 'Value Does Not Contain:',  'value': 'conditional-not-contains'},#}
+
 {% set fieldCount = 0 %}
 {% for field in fields %}
   {% if className(field) != "billythekid\\conditionalfields\\fields\\Conditional" %}
@@ -112,7 +117,11 @@
   conditionContainer.on("change", ".conditionalOnField select", checkSelects);
 
   conditionContainer.on("change", ".conditionalValue select", function (changeEvent) {
-    if ($(this).val() === "conditional-exactly") {
+    if ($.inArray($(this).val(), [
+      'conditional-exactly',
+      'conditional-contains',
+      'conditional-not-contains'
+    ]) > -1) {
       conditionContainer.find('.exactlyValue').attr('type', 'text');
     } else {
       conditionContainer.find('.exactlyValue').attr('type', 'hidden');

@@ -63,7 +63,7 @@ class Conditional extends Field
         [['conditionalShowOrHideFields'], function ($attribute) {
           if (!is_array($this->$attribute))
           {
-            $this->addError($this->$attribute, $this->$attribute . " is not an array" );
+            $this->addError($this->$attribute, $this->$attribute . " is not an array");
           }
         }],
         ['conditionalShow', 'boolean'],
@@ -131,7 +131,8 @@ class Conditional extends Field
         'namespace'      => $namespacedId,
         'prefix'         => Craft::$app->getView()->namespaceInputId(''),
         'fieldToWatch'   => $this->conditionalOnField,
-        'valueToWatch'   => $this->conditionalValue !== 'conditional-exactly' ? $this->conditionalValue : $this->exactlyValue,
+        'valueToWatch'   => $this->conditionalValue,
+        'freeTextValue'  => $this->exactlyValue,
         'showOrHide'     => $this->conditionalShow ? 'show' : 'hide',
         'fieldsToToggle' => $this->conditionalShowOrHideFields,
     ];
