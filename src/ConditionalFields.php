@@ -47,6 +47,7 @@ class ConditionalFields extends Plugin
      */
     public $schemaVersion = '0.0.1';
 
+
     // Public Methods
     // =========================================================================
 
@@ -65,27 +66,5 @@ class ConditionalFields extends Plugin
                 $event->types[] = ConditionalField::class;
             }
         );
-
-        Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                }
-            }
-        );
-
-        Craft::info(
-            Craft::t(
-                'conditional-fields',
-                '{name} plugin loaded',
-                ['name' => $this->name]
-            ),
-            __METHOD__
-        );
     }
-
-    // Protected Methods
-    // =========================================================================
-
 }

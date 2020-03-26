@@ -36,7 +36,7 @@ class Conditional extends Field
   public $conditionalValue = '';
   public $exactlyValue = '';
   public $conditionalShow = true;
-  public $conditionalShowOrHideField = '';
+  public $conditionalShowOrHideFields = '';
 
   // Static Methods
   // =========================================================================
@@ -59,10 +59,16 @@ class Conditional extends Field
   {
     $rules = parent::rules();
     $rules = array_merge($rules, [
-        [['conditionalOnField', 'conditionalShowOrHideField', 'conditionalValue', 'exactlyValue'], 'string'],
+        [['conditionalOnField', 'conditionalValue', 'exactlyValue'], 'string'],
+        [['conditionalShowOrHideFields'], function ($attribute) {
+          if (!is_array($this->$attribute))
+          {
+            $this->addError($this->$attribute, $this->$attribute . " is not an array" );
+          }
+        }],
         ['conditionalShow', 'boolean'],
         ['conditionalShow', 'default', 'value' => true],
-        [['conditionalOnField', 'conditionalShowOrHideField', 'conditionalValue', 'conditionalShow'], 'required'],
+        [['conditionalOnField', 'conditionalShowOrHideFields', 'conditionalValue', 'conditionalShow'], 'required'],
     ]);
 
     return $rules;
@@ -120,14 +126,14 @@ class Conditional extends Field
 
     // Variables to pass down to our field JavaScript to let it namespace properly
     $jsonVars = [
-        'id'            => $id,
-        'name'          => $this->handle,
-        'namespace'     => $namespacedId,
-        'prefix'        => Craft::$app->getView()->namespaceInputId(''),
-        'fieldToWatch'  => $this->conditionalOnField,
-        'valueToWatch'  => $this->conditionalValue !== 'conditional-exactly' ? $this->conditionalValue : $this->exactlyValue,
-        'showOrHide'    => $this->conditionalShow ? 'show' : 'hide',
-        'fieldToToggle' => $this->conditionalShowOrHideField,
+        'id'             => $id,
+        'name'           => $this->handle,
+        'namespace'      => $namespacedId,
+        'prefix'         => Craft::$app->getView()->namespaceInputId(''),
+        'fieldToWatch'   => $this->conditionalOnField,
+        'valueToWatch'   => $this->conditionalValue !== 'conditional-exactly' ? $this->conditionalValue : $this->exactlyValue,
+        'showOrHide'     => $this->conditionalShow ? 'show' : 'hide',
+        'fieldsToToggle' => $this->conditionalShowOrHideFields,
     ];
     $jsonVars = Json::encode($jsonVars);
     Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').ConditionalFieldsConditional(" . $jsonVars . ");");

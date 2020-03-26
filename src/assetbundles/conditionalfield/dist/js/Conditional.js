@@ -24,7 +24,7 @@
     this.fieldToWatch = $('#' + this.options.prefix + this.options.fieldToWatch + '-field').first();
     this.valueToWatch = this.options.valueToWatch;
     this.showOrHide = this.options.showOrHide;
-    this.fieldToToggle = this.options.fieldToToggle;
+    this.fieldsToToggle = this.options.fieldsToToggle;
 
     this._defaults = defaults;
     this._name = pluginName;
@@ -107,11 +107,15 @@
     matchIt: function (matches) {
       _this = this;
       $(function () {
-        var fieldToToggle = $('#' + _this.options.prefix + _this.fieldToToggle + '-field').first();
+
+        var fieldsToToggle = _this.fieldsToToggle.map(function(thisFieldToToggle){
+          return $('#' + _this.options.prefix + thisFieldToToggle + '-field').first();
+        });
+
         if ((_this.showOrHide === 'show' && matches) || (_this.showOrHide === 'hide' && !matches)) {
-          fieldToToggle.show();
+          $(fieldsToToggle).each(function(){$(this).show()});
         } else {
-          fieldToToggle.hide();
+          $(fieldsToToggle).each(function(){$(this).hide()});
         }
       });
     }

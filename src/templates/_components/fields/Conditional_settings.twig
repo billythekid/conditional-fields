@@ -92,15 +92,16 @@
   <div class="field">
     <div class="heading">
       <div class="instructions">
-        <p>…this field</p>
+        <p>…these fields</p>
       </div>
     </div>
-    {{ forms.select ({
-      id: 'conditionalShowOrHideField',
-      name: 'conditionalShowOrHideField',
-      class: 'conditionalShowOrHideField',
+    {{ forms.multiselect ({
+      id: 'conditionalShowOrHideFields',
+      name: 'conditionalShowOrHideFields',
+      class: 'conditionalShowOrHideFields',
       options: availableFields,
-      value: field['conditionalShowOrHideField']}) }}
+      required: true,
+      values: field['conditionalShowOrHideFields']}) }}
   </div>
 
   {% js %}
@@ -119,15 +120,16 @@
   });
 
   function checkSelects() {
-    conditionContainer.find(".conditionalShowOrHideField select option").each(function () {
+    conditionContainer.find(".conditionalShowOrHideFields select option").each(function () {
       $(this).prop('disabled', false);
       if ($(this).val() === conditionContainer.find(".conditionalOnField select").val()) {
         $(this).prop('disabled', true);
+        $(this).prop("selected", false)
       }
     });
 
-    if (conditionContainer.find(".conditionalShowOrHideField select").val() === null) {
-      conditionContainer.find(".conditionalShowOrHideField select").val(conditionContainer.find(".conditionalShowOrHideField select option:not(:disabled)").first().val());
+    if (conditionContainer.find(".conditionalShowOrHideFields select").val() === null) {
+      conditionContainer.find(".conditionalShowOrHideFields select").val(conditionContainer.find(".conditionalShowOrHideFields select option:not(:disabled)").first().val());
     }
   }
 

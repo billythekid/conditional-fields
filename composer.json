@@ -1,6 +1,6 @@
 {
     "name": "billythekid/conditional-fields",
-    "description": "if (condition) { show(field) }",
+    "description": "Show or hide fields based on the value of other fields.",
     "type": "craft-plugin",
     "version": "0.0.1",
     "keywords": [
