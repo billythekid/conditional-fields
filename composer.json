@@ -2,7 +2,6 @@
     "name": "billythekid/conditional-fields",
     "description": "Show or hide fields based on the value of other fields.",
     "type": "craft-plugin",
-    "version": "0.0.3",
     "keywords": [
         "craft",
         "cms",
