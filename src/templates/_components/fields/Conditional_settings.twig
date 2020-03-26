@@ -20,113 +20,128 @@
 {% set fields = craft.app.fields.allFields %}
 {% set availableFields = [] %}
 {% set availableValues = [
-  {'label': 'No Value (Empty)', 'value': 'empty'},
-  {'label': 'Any Value', 'value' : 'not empty'},
-  {'label': 'True / On / Checked', 'value': 'true'},
-  {'label': 'False / Off / Unchecked', 'value': 'false'},
-  {'label': 'Exactly this:', 'value': 'exactly'},
+  {'label': 'No Value (Empty)',         'value': 'conditional-empty'},
+  {'label': 'Any Value',                'value': 'conditional-not-empty'},
+  {'label': 'True / On / Checked',      'value': 'conditional-true'},
+  {'label': 'False / Off / Unchecked',  'value': 'conditional-false'},
+  {'label': 'Exactly this:',            'value': 'conditional-exactly'},
 ] %}
-
+{% set fieldCount = 0 %}
 {% for field in fields %}
   {% if className(field) != "billythekid\\conditionalfields\\fields\\Conditional" %}
+    {% set fieldCount = fieldCount + 1 %}
     {#<pre>#}
     {#{{ dump(field) }}#}
     {#</pre>#}
-    {% set availableFields = availableFields | merge([{'label': field.name ~ " (" ~ className(field)|split('\\')|last|title ~ ")" , 'value':field.id}]) %}
+    {% set availableFields = availableFields | merge([{'label': field.name ~ " (" ~ className(field)|split('\\')|last|title ~ ")" , 'value':field.handle}]) %}
   {% endif %}
 {% endfor %}
 
-<div class="field">
+{% if fieldCount > 1 %}
+  <div class="field">
 
-  <div class="heading">
-    <label for="conditionalOnField">Condition</label>
-    <div class="instructions">
-      <p>If this field</p>
+    <div class="heading">
+      <label for="conditionalOnField">Condition</label>
+      <div class="instructions">
+        <p>If this field</p>
+      </div>
     </div>
+    {{ forms.select ({
+      id: 'conditionalOnField',
+      name: 'conditionalOnField',
+      class: 'conditionalOnField',
+      options: availableFields,
+      value: field['conditionalOnField']}) }}
   </div>
-  {{ forms.select ({
-    id: 'conditionalOnField',
-    name: 'conditionalOnField',
-    class: 'conditionalOnField',
-    options: availableFields,
-    value: field['conditionalOnField']}) }}
-</div>
 
-<div class="field">
-  <div class="heading">
-    <div class="instructions">
-      <p>…has this value</p>
+  <div class="field">
+    <div class="heading">
+      <div class="instructions">
+        <p>…has this value (make sure it makes sense for the field type)</p>
+      </div>
     </div>
+    {{ forms.select ({
+      id: 'conditionalValue',
+      name: 'conditionalValue',
+      class: 'conditionalValue',
+      options: availableValues,
+      value: field['conditionalValue']}) }}
+
+    {{ forms.text({
+      id: 'exactlyValue',
+      name: 'exactlyValue',
+      class: 'exactlyValue',
+      size: true,
+      type: field['exactlyValue'] is not empty ? 'text' : 'hidden',
+      value: field['exactlyValue']
+    }) }}
   </div>
-  {{ forms.select ({
-    id: 'conditionalValue',
-    name: 'conditionalValue',
-    class: 'conditionalValue',
-    options: availableValues,
-    value: field['conditionalValue']}) }}
 
-  {{ forms.text({
-    id: 'exactlyValue',
-    name: 'exactlyValue',
-    class: 'exactlyValue',
-    size: true,
-    type: field['exactlyValue'] is not empty ? 'text' : 'hidden',
-    value: field['exactlyValue']
-  }) }}
-</div>
-
-<div class="field">
-  <div class="heading">
-    <div class="instructions">
-      <p>…then</p>
+  <div class="field">
+    <div class="heading">
+      <div class="instructions">
+        <p>…then</p>
+      </div>
     </div>
+    {{ forms.select ({
+      id: 'conditionalShow',
+      name: 'conditionalShow',
+      options: [{"label":"Show", "value": "1"}, {"label":"Hide", "value": "0"}],
+      value: field['conditionalShow']}) }}
   </div>
-  {{ forms.select ({
-    id: 'conditionalShow',
-    name: 'conditionalShow',
-    options: [{"label":"Show", "value": "1"}, {"label":"Hide", "value": "0"}],
-    value: field['conditionalShow']}) }}
-</div>
-<div class="field">
-  <div class="heading">
-    <div class="instructions">
-      <p>…this field</p>
+  <div class="field">
+    <div class="heading">
+      <div class="instructions">
+        <p>…this field</p>
+      </div>
     </div>
+    {{ forms.select ({
+      id: 'conditionalShowOrHideField',
+      name: 'conditionalShowOrHideField',
+      class: 'conditionalShowOrHideField',
+      options: availableFields,
+      value: field['conditionalShowOrHideField']}) }}
   </div>
-  {{ forms.select ({
-    id: 'conditionalShowOrHideField',
-    name: 'conditionalShowOrHideField',
-    class: 'conditionalShowOrHideField',
-    options: availableFields,
-    value: field['conditionalShowOrHideField']}) }}
-</div>
 
-{% js %}
-var conditionContainer = $("#billythekid-conditionalfields-fields-Conditional");
+  {% js %}
+  var conditionContainer = $("#billythekid-conditionalfields-fields-Conditional");
 
-checkSelects();
+  checkSelects();
 
-conditionContainer.on("change", ".conditionalOnField select", checkSelects );
+  conditionContainer.on("change", ".conditionalOnField select", checkSelects);
 
-conditionContainer.on("change", ".conditionalValue select", function (changeEvent) {
-  if ($(this).val() === "exactly") {
-    conditionContainer.find('.exactlyValue').attr('type', 'text');
-  } else {
-    conditionContainer.find('.exactlyValue').attr('type', 'hidden');
-  }
-});
-
-function checkSelects() {
-  conditionContainer.find(".conditionalShowOrHideField select option").each(function () {
-    $(this).prop('disabled', false);
-    if ($(this).val() === conditionContainer.find(".conditionalOnField select").val()) {
-      $(this).prop('disabled', true);
+  conditionContainer.on("change", ".conditionalValue select", function (changeEvent) {
+    if ($(this).val() === "conditional-exactly") {
+      conditionContainer.find('.exactlyValue').attr('type', 'text');
+    } else {
+      conditionContainer.find('.exactlyValue').attr('type', 'hidden');
     }
   });
 
-  if (conditionContainer.find(".conditionalShowOrHideField select").val() === null) {
-    conditionContainer.find(".conditionalShowOrHideField select").val(conditionContainer.find(".conditionalShowOrHideField select option:not(:disabled)").first().val());
-  }
-}
+  function checkSelects() {
+    conditionContainer.find(".conditionalShowOrHideField select option").each(function () {
+      $(this).prop('disabled', false);
+      if ($(this).val() === conditionContainer.find(".conditionalOnField select").val()) {
+        $(this).prop('disabled', true);
+      }
+    });
 
-{% endjs %}
+    if (conditionContainer.find(".conditionalShowOrHideField select").val() === null) {
+      conditionContainer.find(".conditionalShowOrHideField select").val(conditionContainer.find(".conditionalShowOrHideField select option:not(:disabled)").first().val());
+    }
+  }
+
+  {% endjs %}
+{% else %}
+  <div class="field">
+
+    <div class="heading">
+      <label for="conditionalOnField">Not enough fields available</label>
+      <div class="instructions">
+        <p>You need to create at least two fields to use this type of field. <br>
+          One to decide whether to show or hide the other one. <br>
+          You currently have <strong>{{ fieldCount }}</strong> fields.</p>
+      </div>
+    </div>
+  </div>
+{% endif %}

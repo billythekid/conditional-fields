@@ -13,12 +13,7 @@
  */
 #}
 
+{% do view.registerAssetBundle("billythekid\\conditionalfields\\assetbundles\\conditionalfield\\ConditionalFieldAsset") %}
+
 {% import "_includes/forms" as forms %}
 
-{{ forms.textField({
-        label: 'Conditional Field',
-        instructions: 'What\'s even going on?',
-        id: name,
-        name: name,
-        value: value})
-}}

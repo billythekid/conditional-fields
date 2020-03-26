@@ -12,3 +12,7 @@
 .conditionalValue select option[disabled] {
   display: none;
 }
+
+.field[data-type="billythekid\\conditionalfields\\fields\\Conditional"] {
+  display: none;
+}
