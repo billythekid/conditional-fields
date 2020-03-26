@@ -6,7 +6,7 @@
 
 Show or hide fields based on the value of other fields. PRs gratefully received. 
 
-Please post [any issues](billythekid/conditional-fields/issues) you're having and I'll check them out.
+Please post [any issues](https://github.com/billythekid/conditional-fields/issues) you're having and I'll check them out.
 
 Conditional field layouts are coming to Craft CMS version 4 core. Craft CMS version 2 had the [Reasons plugin](https://github.com/mmikkel/Reasons-Craft) but there's nothing working for Craft 3 at the moment.
 
