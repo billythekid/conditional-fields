@@ -6,19 +6,15 @@
 
 Show or hide fields based on the value of other fields. PRs gratefully received.
 
-```
-  if (someFieldValue is a match) { 
-    showOrHide(someOtherFields) 
-  }
-```
-
 Conditional field layouts are coming to Craft CMS version 4 core. Craft CMS version 2 had the [Reasons plugin](https://github.com/mmikkel/Reasons-Craft) but there's nothing working for Craft 3 at the moment.
 
 This is a very simple, very dumb, implementation of a way to get conditional field layouts in your entries etc.
+
+If you need something complex it's almost certainly not possible with this plugin, but if you just need to show and hide some fields based on simple selections, like light switches, give it a whirl. 
  
 ## Requirements
 
-This plugin requires Craft CMS 3.4.10 or later. It may work on earlier (^3.0) versions but I've not tested it.
+This plugin requires Craft CMS 3.4.10 or later. It may work on earlier (^3.0) versions but I've not tested it. I haven't restricted installation to 3.4.10 so give it a go!
 
 ## Installation
 
