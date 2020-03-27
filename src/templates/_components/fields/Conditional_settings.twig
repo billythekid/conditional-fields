@@ -19,15 +19,6 @@
 
 {% set fields = craft.app.fields.allFields %}
 {% set availableFields = [] %}
-{% set availableValues = [
-  {'label': 'No Value (Empty)',         'value': 'conditional-empty'},
-  {'label': 'Any Value',                'value': 'conditional-not-empty'},
-  {'label': 'True / On / Checked',      'value': 'conditional-true'},
-  {'label': 'False / Off / Unchecked',  'value': 'conditional-false'},
-  {'label': 'Value Contains:',          'value': 'conditional-contains'},
-  {'label': 'Value Does Not Contain:',  'value': 'conditional-not-contains'},
-  {'label': 'Exactly this:',            'value': 'conditional-exactly'},
-] %}
 
 {% set fieldCount = 0 %}
 {% for field in fields %}
@@ -37,10 +28,23 @@
     {#{{ dump(field) }}#}
     {#</pre>#}
     {% set availableFields = availableFields | merge([{'label': field.name ~ " (" ~ className(field)|split('\\')|last|title ~ ")" , 'value':field.handle}]) %}
-  {% endif %}
+      {% endif %}
 {% endfor %}
 
 {% if fieldCount > 1 %}
+
+  {% set availableValues = [
+    {'label': 'No Value (Empty)',         'value': 'conditional-empty'},
+    {'label': 'Any Value',                'value': 'conditional-not-empty'},
+    {'label': 'True / On / Checked',      'value': 'conditional-true'},
+    {'label': 'False / Off / Unchecked',  'value': 'conditional-false'},
+    {'label': 'Value Contains:',          'value': 'conditional-contains'},
+    {'label': 'Value Does Not Contain:',  'value': 'conditional-not-contains'},
+    {'label': 'Exactly this:',            'value': 'conditional-exactly'},
+  ] %}
+
+
+
   <div class="field">
 
     <div class="heading">
@@ -95,7 +99,7 @@
   <div class="field">
     <div class="heading">
       <div class="instructions">
-        <p>…these fields</p>
+        <p class="required">…these fields</p>
       </div>
     </div>
     {{ forms.multiselect ({
@@ -105,6 +109,26 @@
       options: availableFields,
       required: true,
       values: field['conditionalShowOrHideFields']}) }}
+  </div>
+
+  <div class="field">
+    <div class="heading">
+      <div class="instructions">
+        <p class="required">…OR these entire tabs</p>
+      </div>
+    </div>
+    {{ forms.multiselect ({
+      id: 'conditionalShowOrHideTabs',
+      name: 'conditionalShowOrHideTabs',
+      class: 'conditionalShowOrHideTabs',
+      options: tabs,
+      required: true,
+      values: field['conditionalShowOrHideTabs']}) }}
+    <div class="heading">
+      <div class="instructions">
+        <p class="required"><strong>NOTE:</strong> Either fields OR tabs is required.</p>
+      </div>
+    </div>
   </div>
 
   {% js %}

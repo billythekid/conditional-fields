@@ -12,10 +12,14 @@ namespace billythekid\conditionalfields\fields;
 use billythekid\conditionalfields\ConditionalFields;
 use billythekid\conditionalfields\assetbundles\conditionalfield\ConditionalFieldAsset;
 
+use codeonyii\yii2validators\AtLeastValidator;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\helpers\Db;
+use craft\helpers\StringHelper;
+use craft\records\FieldLayout;
+use craft\records\FieldLayoutTab;
 use yii\db\Schema;
 use craft\helpers\Json;
 
@@ -37,6 +41,7 @@ class Conditional extends Field
   public $exactlyValue = '';
   public $conditionalShow = true;
   public $conditionalShowOrHideFields = '';
+  public $conditionalShowOrHideTabs = '';
 
   // Static Methods
   // =========================================================================
@@ -60,19 +65,21 @@ class Conditional extends Field
     $rules = parent::rules();
     $rules = array_merge($rules, [
         [['conditionalOnField', 'conditionalValue', 'exactlyValue'], 'string'],
-        [['conditionalShowOrHideFields'], function ($attribute) {
+        [['conditionalShowOrHideFields', 'conditionalShowOrHideTabs'], function ($attribute) {
           if (!is_array($this->$attribute))
           {
             $this->addError($this->$attribute, $this->$attribute . " is not an array");
           }
         }],
+        [['conditionalShowOrHideFields', 'conditionalShowOrHideTabs'], AtLeastValidator::class, 'in' => ['conditionalShowOrHideFields', 'conditionalShowOrHideTabs']],
         ['conditionalShow', 'boolean'],
         ['conditionalShow', 'default', 'value' => true],
-        [['conditionalOnField', 'conditionalShowOrHideFields', 'conditionalValue', 'conditionalShow'], 'required'],
+        [['conditionalOnField', 'conditionalValue', 'conditionalShow'], 'required'],
     ]);
 
     return $rules;
   }
+
 
   /**
    * @inheritdoc
@@ -103,11 +110,22 @@ class Conditional extends Field
    */
   public function getSettingsHtml()
   {
+    $fixedTabs = [];
+    $tabs      = FieldLayoutTab::find()->select('name')->orderBy('name')->distinct()->column();
+    foreach ($tabs as $tab)
+    {
+      $fixedTabs[] = [
+          'label' => $tab,
+          'value' => StringHelper::slugify($tab),
+      ];
+    }
+
     // Render the settings template
     return Craft::$app->getView()->renderTemplate(
         'conditional-fields/_components/fields/Conditional_settings',
         [
             'field' => $this,
+            'tabs'  => $fixedTabs,
         ]
     );
   }
@@ -135,6 +153,7 @@ class Conditional extends Field
         'freeTextValue'  => $this->exactlyValue,
         'showOrHide'     => $this->conditionalShow ? 'show' : 'hide',
         'fieldsToToggle' => $this->conditionalShowOrHideFields,
+        'tabsToToggle'   => $this->conditionalShowOrHideTabs,
     ];
     $jsonVars = Json::encode($jsonVars);
     Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').ConditionalFieldsConditional(" . $jsonVars . ");");

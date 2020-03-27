@@ -25,7 +25,8 @@
     this.valueToWatch = this.options.valueToWatch;
     this.freeTextValue = this.options.freeTextValue;
     this.showOrHide = this.options.showOrHide;
-    this.fieldsToToggle = this.options.fieldsToToggle;
+    this.fieldsToToggle = this.options.fieldsToToggle || [];
+    this.tabsToToggle = this.options.tabsToToggle || [];
     this.fieldToWatchInitialContent = this.fieldToWatch.html();
 
     this._defaults = defaults;
@@ -56,9 +57,8 @@
         });
 
         // some crafty things change the DOM but don't fire change events, so poll for any changes in this field's div
-        window.setInterval(function(_this){
-          if(_this.fieldToWatchInitialContent !== _this.fieldToWatch.html())
-          {
+        window.setInterval(function (_this) {
+          if (_this.fieldToWatchInitialContent !== _this.fieldToWatch.html()) {
             _this.fieldToWatch.change();
           }
         }, 500, _this);
@@ -68,7 +68,7 @@
     showOrHideTheField: function () {
       var _this = this;
       $(function () {
-        var valueWeHave = _this.fieldToWatch.find('[value]').first().val() || _this.fieldToWatch.find('[name="fields['+_this.options.fieldToWatch+']"]').first().val();
+        var valueWeHave = _this.fieldToWatch.find('[value]').first().val() || _this.fieldToWatch.find('[name="fields[' + _this.options.fieldToWatch + ']"]').first().val();
         var valuesWeHave = _this.fieldToWatch.find('[value]').filter(function () {
           return $(this).val().length > 0;
         }).map(function () {
@@ -150,15 +150,27 @@
       $(function () {
 
         var fieldsToToggle = _this.fieldsToToggle.map(function (thisFieldToToggle) {
+          // the actual wrapper of the field so labels and stuff disappear too
           return $('#' + _this.options.prefix + thisFieldToToggle + '-field').first();
+        });
+
+        var tabsToToggle = _this.tabsToToggle.map(function (thisTabToToggle) {
+          // the containing LI of the tab's label. We don't actually hide the tab content, just the label to see it.
+          return $('[href="#tab-' + thisTabToToggle + '"]').first().parent();
         });
 
         if ((_this.showOrHide === 'show' && matches) || (_this.showOrHide === 'hide' && !matches)) {
           $(fieldsToToggle).each(function () {
             $(this).show()
           });
+          $(tabsToToggle).each(function () {
+            $(this).show()
+          });
         } else {
           $(fieldsToToggle).each(function () {
+            $(this).hide()
+          });
+          $(tabsToToggle).each(function () {
             $(this).hide()
           });
         }
