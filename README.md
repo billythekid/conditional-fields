@@ -72,7 +72,6 @@ Example of showing/hiding tabs:
 
 <img alt="Layout view showing a matching tabs condition" src="resources/img/there-is-tab-2.png" width="400">
 
-
 ### Dos and Don'ts
 
 #### Do…
@@ -89,4 +88,5 @@ Example of showing/hiding tabs:
 - …set anything that could be hidden as a required field if it doesn't have a value in it. Your element won't validate and you won't be able to see why!
 - …set any "Conditional" fields (the one with the rules in it) to be required in your field layouts, these don't have any values to validate.
 - …give different tabs the same name in any one layout. I mean, why would you? This will probably only toggle the first one.
+- …hide the tab that the conditional field that hides the tab is on, you'll never get it back.
 - …set different conditional fields to operate (show/hide) the same fields in the same layouts. Who knows what will happen‽ Bad things no doubt!
