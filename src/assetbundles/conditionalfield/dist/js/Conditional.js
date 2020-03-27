@@ -50,6 +50,10 @@
           _this.fieldToWatchInitialContent = _this.fieldToWatch.html();
           _this.showOrHideTheField();
         });
+        _this.fieldToWatch.on('keyup', function (changeEvent) {
+          _this.fieldToWatchInitialContent = _this.fieldToWatch.html();
+          _this.showOrHideTheField();
+        });
 
         // some crafty things change the DOM but don't fire change events, so poll for any changes in this field's div
         window.setInterval(function(_this){
@@ -64,16 +68,18 @@
     showOrHideTheField: function () {
       var _this = this;
       $(function () {
-        var valueWeHave = _this.fieldToWatch.find('[value]').first().val();
+        var valueWeHave = _this.fieldToWatch.find('[value]').first().val() || _this.fieldToWatch.find('[name="fields['+_this.options.fieldToWatch+']"]').first().val();
         var valuesWeHave = _this.fieldToWatch.find('[value]').filter(function () {
           return $(this).val().length > 0;
         }).map(function () {
           return $(this).val();
         }).toArray();
 
+        console.log(_this.fieldToWatch, valueWeHave, valuesWeHave);
+
         switch (_this.valueToWatch) {
           case "conditional-empty" :
-            if (valueWeHave.length === 0) {
+            if (valueWeHave.length === 0 && valuesWeHave.length === 0) {
               console.log('empty match');
               _this.matchIt(true);
             } else {
@@ -82,7 +88,7 @@
             }
             break;
           case "conditional-not-empty":
-            if (valueWeHave.length > 0) {
+            if (valueWeHave.length > 0 && valuesWeHave.length === 0) {
               console.log('nonempty match');
               _this.matchIt(true);
             } else {
