@@ -75,7 +75,7 @@
           return $(this).val();
         }).toArray();
 
-        console.log(_this.fieldToWatch, valueWeHave, valuesWeHave);
+        // console.log(_this.fieldToWatch, valueWeHave, valuesWeHave);
 
         switch (_this.valueToWatch) {
           case "conditional-empty" :
