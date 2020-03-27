@@ -88,7 +88,7 @@
             }
             break;
           case "conditional-not-empty":
-            if (valueWeHave.length > 0 && valuesWeHave.length === 0) {
+            if (valueWeHave.length > 0 && valuesWeHave.length > 0) {
               console.log('nonempty match');
               _this.matchIt(true);
             } else {
