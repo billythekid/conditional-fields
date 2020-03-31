@@ -25,9 +25,9 @@
   {% if className(field) != "billythekid\\conditionalfields\\fields\\Conditional" %}
     {% set fieldCount = fieldCount + 1 %}
     {#<pre>#}
-    {#{{ dump(field) }}#}
+    {#{{ dump(field.displayName) }}#}
     {#</pre>#}
-    {% set availableFields = availableFields | merge([{'label': field.name ~ " (" ~ className(field)|split('\\')|last|t|title ~ ")" , 'value':field.handle}]) %}
+    {% set availableFields = availableFields | merge([{'label': field.name ~ " (" ~ field.displayName() ~ ")" , 'value':field.handle}]) %}
   {% endif %}
 {% endfor %}
 
