@@ -2,12 +2,12 @@
 /**
  * @author    Billy Fagan
  * @package   ConditionalFields
- * @since     0.0.1
+ * @since     0.0.6
  */
 
 return [
 
-  //Conditional Field
+  // Conditional Field
     'Conditional'        => 'Conditional',
 
   // Field settings

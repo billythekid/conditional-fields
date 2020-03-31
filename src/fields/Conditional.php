@@ -51,7 +51,7 @@ class Conditional extends Field
    */
   public static function displayName(): string
   {
-    return Craft::t('conditional-fields', 'Conditional');
+    return Craft::t('conditional-fields', Craft::t('conditional-fields', 'Conditional'));
   }
 
   // Public Methods

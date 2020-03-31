@@ -1,7 +1,6 @@
 <?php
 /**
  * Conditional Fields plugin for Craft CMS 3.x
- *
  * if (condition) { show(field) }
  *
  * @link      https://billyfagan.co.uk
@@ -27,44 +26,43 @@ use yii\base\Event;
  * @author    Billy Fagan
  * @package   ConditionalFields
  * @since     0.0.1
- *
  */
 class ConditionalFields extends Plugin
 {
-    // Static Properties
-    // =========================================================================
+  // Static Properties
+  // =========================================================================
 
-    /**
-     * @var ConditionalFields
-     */
-    public static $plugin;
+  /**
+   * @var ConditionalFields
+   */
+  public static $plugin;
 
-    // Public Properties
-    // =========================================================================
+  // Public Properties
+  // =========================================================================
 
-    /**
-     * @var string
-     */
-    public $schemaVersion = '0.0.1';
+  /**
+   * @var string
+   */
+  public $schemaVersion = '0.0.1';
 
 
-    // Public Methods
-    // =========================================================================
+  // Public Methods
+  // =========================================================================
 
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        parent::init();
-        self::$plugin = $this;
+  /**
+   * @inheritdoc
+   */
+  public function init()
+  {
+    parent::init();
+    self::$plugin = $this;
 
-        Event::on(
-            Fields::class,
-            Fields::EVENT_REGISTER_FIELD_TYPES,
-            function (RegisterComponentTypesEvent $event) {
-                $event->types[] = ConditionalField::class;
-            }
-        );
-    }
+    Event::on(
+        Fields::class,
+        Fields::EVENT_REGISTER_FIELD_TYPES,
+        function (RegisterComponentTypesEvent $event) {
+          $event->types[] = ConditionalField::class;
+        }
+    );
+  }
 }

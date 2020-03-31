@@ -27,20 +27,20 @@
     {#<pre>#}
     {#{{ dump(field) }}#}
     {#</pre>#}
-    {% set availableFields = availableFields | merge([{'label': field.name ~ " (" ~ className(field)|split('\\')|last|title ~ ")" , 'value':field.handle}]) %}
-      {% endif %}
+    {% set availableFields = availableFields | merge([{'label': field.name ~ " (" ~ className(field)|split('\\')|last|t|title ~ ")" , 'value':field.handle}]) %}
+  {% endif %}
 {% endfor %}
 
 {% if fieldCount > 1 %}
 
   {% set availableValues = [
-    {'label': 'No Value (Empty)',         'value': 'conditional-empty'},
-    {'label': 'Any Value',                'value': 'conditional-not-empty'},
-    {'label': 'True / On / Checked',      'value': 'conditional-true'},
-    {'label': 'False / Off / Unchecked',  'value': 'conditional-false'},
-    {'label': 'Value Contains:',          'value': 'conditional-contains'},
-    {'label': 'Value Does Not Contain:',  'value': 'conditional-not-contains'},
-    {'label': 'Exactly this:',            'value': 'conditional-exactly'},
+    {'label': 'No Value (Empty)' | t("conditional-fields") ,        'value': 'conditional-empty'},
+    {'label': 'Any Value' | t("conditional-fields") ,               'value': 'conditional-not-empty'},
+    {'label': 'True / On / Checked' | t("conditional-fields") ,     'value': 'conditional-true'},
+    {'label': 'False / Off / Unchecked' | t("conditional-fields") , 'value': 'conditional-false'},
+    {'label': 'Value Contains:' | t("conditional-fields") ,         'value': 'conditional-contains'},
+    {'label': 'Value Does Not Contain:' | t("conditional-fields") , 'value': 'conditional-not-contains'},
+    {'label': 'Exactly this:' | t("conditional-fields") ,           'value': 'conditional-exactly'},
   ] %}
 
 
@@ -48,9 +48,9 @@
   <div class="field">
 
     <div class="heading">
-      <label for="conditionalOnField">Condition</label>
+      <label for="conditionalOnField">{{ "Condition" | t("conditional-fields") }}</label>
       <div class="instructions">
-        <p>If this field</p>
+        <p>{{ "If this field" | t("conditional-fields") }}</p>
       </div>
     </div>
     {{ forms.select ({
@@ -64,7 +64,7 @@
   <div class="field">
     <div class="heading">
       <div class="instructions">
-        <p>…has this value (make sure it makes sense for the field type)</p>
+        <p>{{ "…has this value (make sure it makes sense for the field type)" | t("conditional-fields") }}</p>
       </div>
     </div>
     {{ forms.select ({
@@ -87,19 +87,19 @@
   <div class="field">
     <div class="heading">
       <div class="instructions">
-        <p>…then</p>
+        <p>{{ "…then" | t("conditional-fields") }}</p>
       </div>
     </div>
     {{ forms.select ({
       id: 'conditionalShow',
       name: 'conditionalShow',
-      options: [{"label":"Show", "value": "1"}, {"label":"Hide", "value": "0"}],
+      options: [{"label":"Show" | t("conditional-fields") ,"value": "1"}, {"label":"Hide" | t("conditional-fields") ,"value": "0"}],
       value: field['conditionalShow']}) }}
   </div>
   <div class="field">
     <div class="heading">
       <div class="instructions">
-        <p class="required">…these fields</p>
+        <p class="required">{{ "…these fields" | t("conditional-fields") }}</p>
       </div>
     </div>
     {{ forms.multiselect ({
@@ -114,7 +114,7 @@
   <div class="field">
     <div class="heading">
       <div class="instructions">
-        <p class="required">…OR these entire tabs</p>
+        <p class="required">{{ "…OR these entire tabs" | t("conditional-fields") }}</p>
       </div>
     </div>
     {{ forms.multiselect ({
@@ -126,7 +126,7 @@
       values: field['conditionalShowOrHideTabs']}) }}
     <div class="heading">
       <div class="instructions">
-        <p class="required"><strong>NOTE:</strong> Either fields OR tabs is required.</p>
+        <p class="required"><strong>{{ "NOTE" | t("conditional-fields") }}:</strong> {{ "Either fields OR tabs is required." | t("conditional-fields") }}</p>
       </div>
     </div>
   </div>
@@ -169,11 +169,11 @@
   <div class="field">
 
     <div class="heading">
-      <label for="conditionalOnField">Not enough fields available</label>
+      <label for="conditionalOnField">{{ "Not enough fields available" | t("conditional-fields") }}</label>
       <div class="instructions">
-        <p>You need to create at least two fields to use this type of field. <br>
-          One to decide whether to show or hide the other one. <br>
-          You currently have <strong>{{ fieldCount }}</strong> fields.</p>
+        <p>{{ "You need to create at least two fields to use this type of field." | t("conditional-fields") }} <br>
+          {{ "One to decide whether to show or hide the other one." | t("conditional-fields") }} <br>
+          {{ "You currently have" | t("conditional-fields") }} <strong>{{ fieldCount }}</strong> {{ "fields" | t("conditional-fields") }}.</p>
       </div>
     </div>
   </div>
