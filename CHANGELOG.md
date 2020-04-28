@@ -1,5 +1,9 @@
 # Conditional Fields Changelog
 
+## 0.0.6 - 28 April 2020
+### Fixed
+- Bug where dropdown, radio and checkbox fields weren't being matched (#12)
+
 ## 0.0.5 - 27 March 2020
 #### Added
 - Toggle entire tabs

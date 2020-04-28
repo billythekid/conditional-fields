@@ -68,14 +68,20 @@
     showOrHideTheField: function () {
       var _this = this;
       $(function () {
-        var valueWeHave = _this.fieldToWatch.find('[value]').first().val() || _this.fieldToWatch.find('[name="fields[' + _this.options.fieldToWatch + ']"]').first().val();
+
+        var valueWeHave =
+          _this.fieldToWatch.find(':checked').first().val() ||
+          _this.fieldToWatch.find(':selected').first().val() ||
+          _this.fieldToWatch.find('[value]').first().val() ||
+          _this.fieldToWatch.find('[name="fields[' + _this.options.fieldToWatch + ']"]').first().val();
+
         var valuesWeHave = _this.fieldToWatch.find('[value]').filter(function () {
           return $(this).val().length > 0;
         }).map(function () {
           return $(this).val();
         }).toArray();
 
-        // console.log(_this.fieldToWatch, valueWeHave, valuesWeHave);
+        console.log(_this.fieldToWatch, valueWeHave, valuesWeHave);
 
         switch (_this.valueToWatch) {
           case "conditional-empty" :
