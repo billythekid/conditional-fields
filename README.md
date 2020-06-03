@@ -7,7 +7,7 @@ This plugin was a stop-gap measure. [Mats](https://github.com/mmikkel) has porte
 [Brandon](https://github.com/brandonkelly) also added:
 > There's been a change of plans re v4 in light of … everything. Originally v4 was to be our main focus this year, but now we don't think the timing is right for a breaking update like that. So we're working to add as many of the v4 features into v3 as we can w/out breaking things, _**hopefully including conditional fields**_. It's a bit more slow going because brownfield, but we think it's the right call.
 
-So unless you really need conditional fields I'd suggest waiting for it to come into core. If you really realyl need them, first use Reasons and only if you need the dumbest implementation use this. You've been warned!
+So unless you really need conditional fields I'd suggest waiting for it to come into core. If you really really need them, first use Reasons and only if you need the dumbest implementation use this. You've been warned!
 
 # Conditional Fields plugin for Craft CMS 3.x
 
