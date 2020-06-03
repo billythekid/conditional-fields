@@ -78,7 +78,6 @@ Example of showing/hiding tabs:
 - …keep it simple where possible. Light switch fields make great 'togglers' and avoid "magic" for users.
 - …add element IDs to 'contains' matches to match if an element field has that element in it.
 - …remember that this is a _**visual**_ show/hide. No values are changed in hidden fields, they're just shown/hidden from view. (So if it has a value before it's hidden, that value can and will be used against you in your templates!)
-- …add more than one conditional field for different conditions. Just remember that you probably don't want them to work at showing and hiding the same fields.
 - …select tab names to conditionally hide a whole tab of fields.
 - …report issues, or even better fork it and raise pull requests for features and fixes.
 
