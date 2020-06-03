@@ -5,7 +5,7 @@ This plugin was a stop-gap measure. [Mats](https://github.com/mmikkel) has porte
 > On the other hand, "soon" is a very relative term... Back when 3.0 released, I'd never guessed it'd take 3-4 years before field layout conditionals would make it to core. Also, we still don't actually know when Craft 4 is coming out :slight_smile:
 
 [Brandon](https://github.com/brandonkelly) also added:
-> There's been a change of plans re v4 in light of … everything. Originally v4 was to be our main focus this year, but now we don't think the timing is right for a breaking update like that. So we're working to add as many of the v4 features into v3 as we can w/out breaking things, hopefully including conditional fields. It's a bit more slow going because brownfield, but we think it's the right call.
+> There's been a change of plans re v4 in light of … everything. Originally v4 was to be our main focus this year, but now we don't think the timing is right for a breaking update like that. So we're working to add as many of the v4 features into v3 as we can w/out breaking things, _**hopefully including conditional fields**_. It's a bit more slow going because brownfield, but we think it's the right call.
 
 So unless you really need conditional fields I'd suggest waiting for it to come into core. If you really realyl need them, first use Reasons and only if you need the dumbest implementation use this. You've been warned!
 
