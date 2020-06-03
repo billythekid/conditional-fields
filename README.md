@@ -8,7 +8,9 @@ Show or hide fields or tabs of fields based on the value of other fields. PRs gr
 
 Easy now, this is probably not all you hoped it would be when you saw it was released! That said, please post [any issues](https://github.com/billythekid/conditional-fields/issues) you're having and I'll check them out.
 
-Conditional field layouts are coming to Craft CMS version 4 core. Craft CMS version 2 had the [Reasons plugin](https://github.com/mmikkel/Reasons-Craft) but there's nothing working for Craft 3 at the moment.
+Conditional field layouts are coming to Craft CMS version 4 core. ~~Craft CMS version 2 had the [Reasons plugin](https://github.com/mmikkel/Reasons-Craft) but there's nothing working for Craft 3 at the moment.~~
+
+**[Reasons is back!](https://github.com/mmikkel/Reasons-Craft3) I strongly suggest using that plugin instead of this one!**
 
 This is a very simple, very dumb, implementation of a way to get conditional field layouts in your entries etc.
 
